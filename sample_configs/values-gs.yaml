@@ -1,7 +1,7 @@
 loki:
   serviceName: "loki.m2h60.k8s.gauss.eu-west-1.aws.gigantic.io"  # Defaults to "${RELEASE}-loki" if not set
-  servicePort: 80
-  serviceScheme: http
+  servicePort: 443
+  serviceScheme: https
   # user: user
   # password: pass
 
