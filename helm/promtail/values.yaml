@@ -16,7 +16,7 @@ initContainer:
   fsInotifyMaxUserInstances: 128
 
 image:
-  repository: grafana/promtail
+  repository: quay.io/giantswarm/promtail
   tag: 2.1.0
   pullPolicy: IfNotPresent
   ## Optionally specify an array of imagePullSecrets.
