@@ -21,5 +21,9 @@ backoff_config:
   max_period: 10m
 
 extraScrapeConfigs:
-  - journal:
-    json: true
+  - job_name: systemd_journal
+    journal:
+      json: true
+    relabel_configs:
+      - source_labels: ['__journal__systemd_unit']
+        target_label: 'systemd_unit'
