@@ -164,8 +164,6 @@ config:
     # Maximum time to wait for server to respond to a request
     timeout: 10s
 
-    tenant_id: 1
-
     backoff_config:
       # Initial backoff time between retries
       min_period: 500ms
