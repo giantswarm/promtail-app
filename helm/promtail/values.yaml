@@ -176,7 +176,7 @@ config:
     external_labels: {}
 
   server:
-    http_listen_port: 3101
+    disable: true
 
   positions:
     filename: /run/promtail/positions.yaml

@@ -5,6 +5,10 @@ loki:
   user: loki
   password: my-brother-is-thor
 
+external_labels:
+  installation: gorilla
+  cluster: loki0
+
 rbac:
   create: true
   pspEnabled: true
@@ -13,4 +17,9 @@ config:
   client:
     tenant_id: 1
 
+backoff_config:
+  max_period: 10m
 
+extraScrapeConfigs:
+  - journal:
+    json: true
