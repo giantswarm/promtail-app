@@ -3,6 +3,10 @@ rbac:
   create: true
   pspEnabled: true
 
+# make promtail print config on start
+extraArgs:
+  - -log-config-reverse-order
+
 # Information about the Loki endpoint to connect to. Currently the chart supports
 # only a single upstream connection.
 config:
@@ -34,3 +38,14 @@ extra_scrape_configs:
     relabel_configs:
       - source_labels: ['__journal__systemd_unit']
         target_label: 'systemd_unit'
+
+# additional volume mounts required for journal login to work on flatcar linux
+extraVolumes:
+  - name: journal
+    hostPath:
+      path: /run/log/journal/
+
+extraVolumeMounts:
+  - name: journal
+    mountPath: /run/log/journal/
+    readOnly: true
