@@ -240,7 +240,7 @@ config:
   # @default -- See `values.yaml`
   snippets:
     pipelineStages:
-      - cri: {}
+      - docker: {}
     common:
       - action: replace
         source_labels:
@@ -265,13 +265,14 @@ config:
         source_labels:
           - __meta_kubernetes_pod_container_name
         target_label: container
-      - action: replace
-        replacement: /var/log/pods/*$1/*.log
-        separator: /
-        source_labels:
-          - __meta_kubernetes_pod_uid
-          - __meta_kubernetes_pod_container_name
-        target_label: __path__
+        # GS: try to skip path info
+        #      - action: replace
+        #        replacement: /var/log/pods/*$1/*.log
+        #        separator: /
+        #        source_labels:
+        #          - __meta_kubernetes_pod_uid
+        #          - __meta_kubernetes_pod_container_name
+        #        target_label: __path__
 
     # If set to true, adds an additional label for the scrape job.
     # This helps debug the Promtail config.
