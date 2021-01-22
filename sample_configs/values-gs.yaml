@@ -4,7 +4,6 @@ rbac:
 
 config:
   lokiAddress: "https://loki:my-brother-is-thor@loki.m2h60.k8s.gauss.eu-west-1.aws.gigantic.io/loki/api/v1/push"
-  serverPort: null
 
 extra_client_configs:
   tenant_id: 1
