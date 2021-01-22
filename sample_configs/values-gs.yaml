@@ -13,13 +13,20 @@ extra_client_configs:
   # authentication
   tenant_id: 1
 
+  # maximum backoff config for client to try connect to a server when it's unavailable
+  # please consult promtail docs for an exact description how it works (it's not total
+  # time to wait for the server to come up!)
   backoff_config:
     max_period: 10m
 
+  # this set of labels will be added to every log entry forwarded by this promtail
+  # instance
   external_labels:
     installation: gorilla
     cluster: loki0
 
+# any extra scrape configs
+# this one includes also system logs reported by systemd-journald
 extra_scrape_configs:
   - job_name: systemd_journal
     journal:
