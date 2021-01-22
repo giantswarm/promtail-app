@@ -1,13 +1,17 @@
-[![CircleCI](https://circleci.com/gh/giantswarm/{APP-NAME}-app.svg?style=shield)](https://circleci.com/gh/giantswarm/{APP-NAME}-app)
-
 # Promtail chart
 
-Giant Swarm offers a {APP-NAME} App which can be installed in tenant clusters.
-Here we define the {APP-NAME} chart with its templates and default configuration.
+[![CircleCI](https://circleci.com/gh/giantswarm/promtail-app.svg?style=shield)](https://circleci.com/gh/giantswarm/promtail-app)
 
-**What is this app?**  
-**Why did we add it?**  
-**Who can use it?**  
+Promtail is a logging agent meant to work with Loki logging server. This chart is meant
+primarily to be used with our [Loki app](https://github.com/giantswarm/loki-app).
+
+Promtail works over the network using HTTP protocol, so can be used on any cluster
+to forward its logs to a Loki instance.
+
+Please note that you can run multiple `promtail` instances on the same cluster,
+but it's up to you to provide a reasonable config for them (and ie. avoid
+duplication). The default config forwards logs from all Kubernetes pods
+and from `systemd-journald` logging service in the operating system.
 
 ## Installing
 
@@ -26,37 +30,12 @@ There are 3 ways to install this app onto a tenant cluster.
 
 ```
 
-### Sample App CR and ConfigMap for the Control Plane
-If you have access to the Kubernetes API on the Control Plane, you could create
-the App CR and ConfigMap directly.
+## Source code origin
 
-Here is an example that would install the app to
-tenant cluster `abc12`:
-
-```
-# appCR.yaml
-
-```
-
-```
-# user-values-configmap.yaml
-
-
-```
-
-See our [full reference page on how to configure applications](https://docs.giantswarm.io/reference/app-configuration/) for more details.
-
-## Compatability
-
-This app has been tested to work with the following tenant cluster release versions:
-* 
-
-## Limitations  
-
-Some apps have restrictions on how they can be deployed.
-Not following these limitations will most likely result in a broken deployment.
-* 
+The source code in `helm/promtail` is a git-subtree coming from the
+<https://github.com/giantswarm/grafana-helm-charts-upstream>. Giant Swarm uses that
+repository to track and adjust or charts maintained by Grafana Labs.
 
 ## Credit
 
-* {APP HELM REPOSITORY}
+* <https://github.com/grafana/helm-charts/tree/main/charts/loki-distributed>

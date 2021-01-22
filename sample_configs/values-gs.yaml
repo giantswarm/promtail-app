@@ -1,11 +1,16 @@
+# these options need to be enabled for cluster that enforce PSP usage
 rbac:
   create: true
   pspEnabled: true
 
+# Information about the Loki endpoint to connect to. Currently the chart supports
+# only a single upstream connection.
 config:
   lokiAddress: "https://loki:my-brother-is-thor@loki.m2h60.k8s.gauss.eu-west-1.aws.gigantic.io/loki/api/v1/push"
 
 extra_client_configs:
+  # please be sure to set the tenant ID to the ID you've agreed on with Loki server
+  # authentication
   tenant_id: 1
 
   backoff_config:
