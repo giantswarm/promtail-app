@@ -1,26 +1,22 @@
-loki:
-  serviceName: "loki.m2h60.k8s.gauss.eu-west-1.aws.gigantic.io"  # Defaults to "${RELEASE}-loki" if not set
-  servicePort: 443
-  serviceScheme: https
-  user: loki
-  password: my-brother-is-thor
-
 rbac:
   create: true
   pspEnabled: true
 
 config:
-  client:
-    tenant_id: 1
+  lokiAddress: "https://loki:my-brother-is-thor@loki.m2h60.k8s.gauss.eu-west-1.aws.gigantic.io/loki/api/v1/push"
+  serverPort: null
 
-    backoff_config:
-      max_period: 10m
+extra_client_configs:
+  tenant_id: 1
 
-    external_labels:
-      installation: gorilla
-      cluster: loki0
+  backoff_config:
+    max_period: 10m
 
-extraScrapeConfigs:
+  external_labels:
+    installation: gorilla
+    cluster: loki0
+
+extra_scrape_configs:
   - job_name: systemd_journal
     journal:
       json: true
