@@ -10,9 +10,16 @@ extraArgs:
 # Information about the Loki endpoint to connect to. Currently the chart supports
 # only a single upstream connection.
 config:
-  lokiAddress: "https://loki:my-brother-is-thor@loki.m2h60.k8s.gauss.eu-west-1.aws.gigantic.io/loki/api/v1/push"
+  lokiAddress: "https://loki.m2h60.k8s.gauss.eu-west-1.aws.gigantic.io/loki/api/v1/push"
 
 extra_client_configs:
+  # basic auth data
+  basic_auth:
+    username: loki
+    # you have to first manually create a secret called promtail-htpasswd with a single 
+    # key "password"
+    password_file: /etc/promtail.htpasswd/password
+
   # please be sure to set the tenant ID to the ID you've agreed on with Loki server
   # authentication
   tenant_id: 1
@@ -44,8 +51,14 @@ extraVolumes:
   - name: journal
     hostPath:
       path: /run/log/journal/
+  - name: htpasswd
+    secret:
+      secretName: promtail-htpasswd
 
 extraVolumeMounts:
   - name: journal
     mountPath: /run/log/journal/
+    readOnly: true
+  - name: htpasswd
+    mountPath: /etc/promtail.htpasswd/
     readOnly: true
