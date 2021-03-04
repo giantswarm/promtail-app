@@ -23,3 +23,6 @@ engine: gotpl
 restrictions:
   namespaceSingleton: true
 icon: https://raw.githubusercontent.com/grafana/loki/master/docs/sources/logo.png
+annotations:
+  application.giantswarm.io/team: "halo"
+
