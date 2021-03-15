@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1-alpha2] - 2021-03-15
+
 ### Changed
 
 - Upgrade to promtail 2.2.0
@@ -22,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### changes
 - first release
 
-[Unreleased]: https://github.com/giantswarm/promtail-app/compare/v0.1.1-alpha...HEAD
+[Unreleased]: https://github.com/giantswarm/promtail-app/compare/v0.1.1-alpha2...HEAD
+[0.1.1-alpha2]: https://github.com/giantswarm/promtail-app/compare/v0.1.1-alpha...v0.1.1-alpha2
 [0.1.1-alpha]: https://github.com/giantswarm/promtail-app/compare/v0.1.0-alpha...v0.1.1-alpha
 [0.1.0-alpha]: https://github.com/giantswarm/promtail-app/releases/tag/v0.1.0-alpha
