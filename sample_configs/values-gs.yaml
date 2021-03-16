@@ -11,46 +11,45 @@ extraArgs:
 # only a single upstream connection.
 config:
   lokiAddress: "https://loki.m2h60.k8s.gauss.eu-west-1.aws.gigantic.io/loki/api/v1/push"
+  snippets:
+    extraClientConfigs: |
+      # basic auth data
+      basic_auth:
+        username: loki
+        # use either 'password' or 'password_file'
+        # "password" sets the password here directly
+        password: secret
+        # If you want to keep the password in an external secret (created outside of this chart),
+        # uncomment the option below. Then uncomment "htpasswd" section in "extraVolumes" and
+        # "extraVolumeMounts" below.
+        # Remember you have to first manually create a secret called promtail-htpasswd with a single
+        # key "password".
+        #password_file: /etc/promtail.htpasswd/password
 
-extra_client_configs:
-  # basic auth data
-  basic_auth:
-    username: loki
-    # use either 'password' or 'password_file'
-    # "password" sets the password here directly
-    password: secret
-    # If you want to keep the password in an external secret (created outside of this chart),
-    # uncomment the option below. Then uncomment "htpasswd" section in "extraVolumes" and
-    # "extraVolumeMounts" below.
-    # Remember you have to first manually create a secret called promtail-htpasswd with a single 
-    # key "password".
-    #password_file: /etc/promtail.htpasswd/password
+      # please be sure to set the tenant ID to the ID you've agreed on with Loki server
+      # authentication
+      tenant_id: 1
 
-  # please be sure to set the tenant ID to the ID you've agreed on with Loki server
-  # authentication
-  tenant_id: 1
+      # maximum backoff config for client to try connect to a server when it's unavailable
+      # please consult promtail docs for an exact description how it works (it's not total
+      # time to wait for the server to come up!)
+      backoff_config:
+        max_period: 10m
 
-  # maximum backoff config for client to try connect to a server when it's unavailable
-  # please consult promtail docs for an exact description how it works (it's not total
-  # time to wait for the server to come up!)
-  backoff_config:
-    max_period: 10m
+      # this set of labels will be added to every log entry forwarded by this promtail
+      # instance
+      external_labels:
+        installation: gorilla
+        cluster: loki0
 
-  # this set of labels will be added to every log entry forwarded by this promtail
-  # instance
-  external_labels:
-    installation: gorilla
-    cluster: loki0
-
-# any extra scrape configs
-# this one includes also system logs reported by systemd-journald
-extra_scrape_configs:
-  - job_name: systemd_journal
-    journal:
-      json: true
-    relabel_configs:
-      - source_labels: ['__journal__systemd_unit']
-        target_label: 'systemd_unit'
+    extraScrapeConfigs: |
+      # this one includes also system logs reported by systemd-journald
+      - job_name: systemd_journal
+        journal:
+          json: true
+        relabel_configs:
+          - source_labels: ['__journal__systemd_unit']
+            target_label: 'systemd_unit'
 
 # additional volume mounts required for journal login to work on flatcar linux
 extraVolumes:
@@ -92,4 +91,3 @@ extraVolumeMounts:
 #  readOnlyRootFilesystem: true
 #  requiredDropCapabilities:
 #    - ALL
-
