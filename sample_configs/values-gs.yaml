@@ -46,10 +46,14 @@ config:
       # this one includes also system logs reported by systemd-journald
       - job_name: systemd_journal
         journal:
+          path: /run/log/journal
+          max_age: 12h
           json: true
         relabel_configs:
           - source_labels: ['__journal__systemd_unit']
             target_label: 'systemd_unit'
+          - source_labels: ['__journal__hostname']
+            target_label: 'hostname'
 
 # additional volume mounts required for journal login to work on flatcar linux
 extraVolumes:
