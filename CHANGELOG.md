@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Upgrade to promtail 2.2.1
+
 ## [0.1.1-alpha3] - 2021-03-16
 
 ### Removed
