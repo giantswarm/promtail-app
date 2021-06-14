@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Re-release of [0.2.0] as it did not contain the advertised promtail upgrade from [2.2.0](https://github.com/grafana/loki/releases/tag/v2.2.0) to [2.2.1](https://github.com/grafana/loki/releases/tag/v2.2.1).
+
 ## [0.2.0] - 2021-06-08
 
 ### Changed
