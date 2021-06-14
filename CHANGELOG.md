@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.1] - 2021-06-14
+
 ### Fixed
 
 - Re-release of [0.2.0] as it did not contain the advertised promtail upgrade from [2.2.0](https://github.com/grafana/loki/releases/tag/v2.2.0) to [2.2.1](https://github.com/grafana/loki/releases/tag/v2.2.1).
@@ -40,7 +42,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### changes
 - first release
 
-[Unreleased]: https://github.com/giantswarm/promtail-app/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/giantswarm/promtail-app/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/giantswarm/promtail-app/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/giantswarm/promtail-app/compare/v0.1.1-alpha3...v0.2.0
 [0.1.1-alpha3]: https://github.com/giantswarm/promtail-app/compare/v0.1.1-alpha2...v0.1.1-alpha3
 [0.1.1-alpha2]: https://github.com/giantswarm/promtail-app/compare/v0.1.1-alpha...v0.1.1-alpha2
