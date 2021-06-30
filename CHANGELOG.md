@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Enable metric scraping
+- Enable sli monitoring and metric scraping
 
 ## [0.2.1] - 2021-06-14
 
