@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Enable sli monitoring and metric scraping
+- Set deployment resources (Requests/Limits)
 
 ## [0.2.1] - 2021-06-14
 
