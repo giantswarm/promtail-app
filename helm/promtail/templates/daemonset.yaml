@@ -4,6 +4,8 @@ metadata:
   name: {{ include "promtail.fullname" . }}
   labels:
     {{- include "promtail.labels" . | nindent 4 }}
+    giantswarm.io/service-type: "managed"
+    giantswarm.io/monitoring_basic_sli: "true"
   {{- with .Values.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
