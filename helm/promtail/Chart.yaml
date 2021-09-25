@@ -13,6 +13,7 @@ sources:
 - https://github.com/giantswarm/grafana-helm-charts-upstream
 - https://github.com/giantswarm/promtail-app
 upstreamChartURL: https://github.com/grafana/helm-charts/
+upstreamChartVersion: 3.6.0
 maintainers:
 - name: Loki Maintainers
   email: lokiproject@googlegroups.com
