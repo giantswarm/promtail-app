@@ -1,18 +1,15 @@
 apiVersion: v2
 name: promtail
-description: Promtail is an agent which ships the contents of local logs to a Loki instance
+description: An agent which ships logs to a Loki instance
 type: application
 appVersion: 2.2.1
 version: 3.6.0
-home: https://grafana.com/loki
+home: https://github.com/giantswarm/promtail-app
 sources:
 - https://github.com/grafana/loki
-- https://grafana.com/oss/loki/
-- https://grafana.com/docs/loki/latest/
-- https://github.com/grafana/helm-charts/
+- https://github.com/grafana/helm-charts
 - https://github.com/giantswarm/grafana-helm-charts-upstream
-- https://github.com/giantswarm/promtail-app
-upstreamChartURL: https://github.com/grafana/helm-charts/
+upstreamChartURL: https://github.com/grafana/helm-charts
 upstreamChartVersion: 3.6.0
 maintainers:
 - name: Loki Maintainers
@@ -23,6 +20,6 @@ maintainers:
 engine: gotpl
 restrictions:
   namespaceSingleton: true
-icon: https://raw.githubusercontent.com/grafana/loki/master/docs/sources/logo.png
+icon: https://s.giantswarm.io/app-icons/grafana-loki/1/light.png
 annotations:
-  application.giantswarm.io/team: "halo"
+  application.giantswarm.io/team: halo
