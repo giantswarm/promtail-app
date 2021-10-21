@@ -20,6 +20,6 @@ maintainers:
 engine: gotpl
 restrictions:
   namespaceSingleton: true
-icon: https://s.giantswarm.io/app-icons/grafana-loki/1/light.png
+icon: https://s.giantswarm.io/app-icons/grafana-loki/2/dark.svg
 annotations:
-  application.giantswarm.io/team: halo
+  application.giantswarm.io/team: atlas
