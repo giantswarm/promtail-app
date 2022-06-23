@@ -11,13 +11,21 @@
         "config": {
             "type": "object",
             "properties": {
+                "clients": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "url": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
                 "file": {
                     "type": "string"
                 },
                 "logLevel": {
-                    "type": "string"
-                },
-                "lokiAddress": {
                     "type": "string"
                 },
                 "serverPort": {
@@ -49,8 +57,8 @@
                                 }
                             }
                         },
-                        "extraClientConfigs": {
-                            "type": "string"
+                        "extraRelabelConfigs": {
+                            "type": "array"
                         },
                         "extraScrapeConfigs": {
                             "type": "string"
@@ -105,9 +113,6 @@
                     },
                     "name": {
                         "type": "string"
-                    },
-                    "readOnly": {
-                        "type": "boolean"
                     }
                 }
             }
@@ -138,6 +143,9 @@
             "type": "array"
         },
         "extraEnvFrom": {
+            "type": "array"
+        },
+        "extraObjects": {
             "type": "array"
         },
         "extraPorts": {
@@ -430,11 +438,17 @@
                 "labels": {
                     "type": "object"
                 },
+                "metricRelabelings": {
+                    "type": "array"
+                },
                 "namespace": {
                     "type": "null"
                 },
                 "namespaceSelector": {
                     "type": "object"
+                },
+                "relabelings": {
+                    "type": "array"
                 },
                 "scrapeTimeout": {
                     "type": "null"
