@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Modified
+
+- Upgrade `promtail` to 2.5.0 and upstream chart version to 6.0.0
+- **Breaking**: Upgrade requires manual intervention.
+
+### Changes required in your `values.yaml` file:
+- client config is more similar to promtail config file, and is done on `config.clients`.
+
 ## [0.3.2] - 2021-10-22
 
 - Update metadata
