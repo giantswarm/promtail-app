@@ -2,13 +2,13 @@
 
 ![Version: 3.6.0](https://img.shields.io/badge/Version-3.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.2.1](https://img.shields.io/badge/AppVersion-2.2.1-informational?style=flat-square)
 
-Promtail is an agent which ships the contents of local logs to a Loki instance
+An agent which ships logs to a Loki instance
 
 ## Source Code
 
 * <https://github.com/grafana/loki>
-* <https://grafana.com/oss/loki/>
-* <https://grafana.com/docs/loki/latest/>
+* <https://github.com/grafana/helm-charts>
+* <https://github.com/giantswarm/grafana-helm-charts-upstream>
 
 ## Chart Repo
 
@@ -83,12 +83,10 @@ The new release which will pick up again from the existing `positions.yaml`.
 | extraPorts | object | `{}` | Configure additional ports and services. For each configured port, a corresponding service is created. See values.yaml for details |
 | extraVolumeMounts | list | `[]` |  |
 | extraVolumes | list | `[]` |  |
-| extra_client_configs | object | empty | You can put here any keys that will be directly added to the config file's 'client' block. |
-| extra_scrape_configs | object | empty | You can put here any additional scrape configs you want to add to the config file. |
 | fullnameOverride | string | `nil` | Overrides the chart's computed fullname |
 | image.pullPolicy | string | `"IfNotPresent"` | Docker image pull policy |
-| image.registry | string | `"docker.io"` | The Docker registry |
-| image.repository | string | `"grafana/promtail"` | Docker image repository |
+| image.registry | string | `"quay.io"` | The Docker registry |
+| image.repository | string | `"giantswarm/promtail"` | Docker image repository |
 | image.tag | string | `nil` | Overrides the image tag whose default is the chart's appVersion |
 | imagePullSecrets | list | `[]` | Image pull secrets for Docker images |
 | initContainer.enabled | bool | `false` | Specifies whether the init container for setting inotify max user instances is to be enabled |
@@ -114,7 +112,7 @@ The new release which will pick up again from the existing `positions.yaml`.
 | rbac.create | bool | `true` | Specifies whether RBAC resources are to be created |
 | rbac.pspEnabled | bool | `false` | Specifies whether a PodSecurityPolicy is to be created |
 | readinessProbe | object | See `values.yaml` | Readiness probe |
-| resources | object | `{}` | Resource requests and limits |
+| resources | object | `{"limits":{"cpu":"200m","memory":"128Mi"},"requests":{"cpu":"100m","memory":"128Mi"}}` | Resource requests and limits |
 | serviceAccount.annotations | object | `{}` | Annotations for the service account |
 | serviceAccount.create | bool | `true` | Specifies whether a ServiceAccount should be created |
 | serviceAccount.imagePullSecrets | list | `[]` | Image pull secrets for the service account |
@@ -126,7 +124,7 @@ The new release which will pick up again from the existing `positions.yaml`.
 | serviceMonitor.namespace | string | `nil` | Alternative namespace for ServiceMonitor resources |
 | serviceMonitor.namespaceSelector | object | `{}` | Namespace selector for ServiceMonitor resources |
 | serviceMonitor.scrapeTimeout | string | `nil` | ServiceMonitor scrape timeout in Go duration format (e.g. 15s) |
-| tolerations | list | `[{"effect":"NoSchedule","key":"node-role.kubernetes.io/master","operator":"Exists"}]` | Tolerations for pods. By default, pods will be scheduled on master nodes. |
+| tolerations | list | `[{"effect":"NoSchedule","key":"node-role.kubernetes.io/master","operator":"Exists"},{"effect":"NoSchedule","key":"node-role.kubernetes.io/control-plane","operator":"Exists"}]` | Tolerations for pods. By default, pods will be scheduled on master/control-plane nodes. |
 | updateStrategy | object | `{}` | The update strategy for the DaemonSet |
 
 ## Configuration
