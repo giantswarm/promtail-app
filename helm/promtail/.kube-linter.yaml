@@ -8,3 +8,6 @@ checks:
   - "unset-cpu-requirements"
   - "unset-memory-requirements"
   - "writable-host-mount"
+  - "no-rolling-update-strategy"
+  - "non-isolated-pod"
+  - "use-namespace"
