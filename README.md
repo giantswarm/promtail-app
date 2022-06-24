@@ -1,6 +1,6 @@
 # promtail
 
-![Version: 3.0.3](https://img.shields.io/badge/Version-3.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.1.0](https://img.shields.io/badge/AppVersion-2.1.0-informational?style=flat-square)
+![Version: 6.0.0](https://img.shields.io/badge/Version-6.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.5.0](https://img.shields.io/badge/AppVersion-2.5.0-informational?style=flat-square)
 
 Promtail is an agent which ships the contents of local logs to a Loki instance
 
@@ -65,18 +65,22 @@ The new release which will pick up again from the existing `positions.yaml`.
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity configuration for pods |
-| annotations | object | `{}` | Annotations for the SaemonSet |
+| annotations | object | `{}` | Annotations for the DaemonSet |
 | config | object | See `values.yaml` | Section for crafting Promtails config file. The only directly relevant value is `config.file` which is a templated string that references the other values and snippets below this key. |
+| config.clients | list | See `values.yaml` | The config of clients of the Promtail server Must be reference in `config.file` to configure `clients` |
 | config.file | string | See `values.yaml` | Config file contents for Promtail. Must be configured as string. It is templated so it can be assembled from reusable snippets in order to avoid redundancy. |
-| config.lokiAddress | string | `"http://loki-gateway/loki/api/v1/push"` | The Loki address to post logs to. Must be reference in `config.file` to configure `client.url`. See default config in `values.yaml` |
+| config.logLevel | string | `"info"` | The log level of the Promtail server Must be reference in `config.file` to configure `server.log_level` See default config in `values.yaml` |
 | config.serverPort | int | `3101` | The port of the Promtail server Must be reference in `config.file` to configure `server.http_listen_port` See default config in `values.yaml` |
 | config.snippets | object | See `values.yaml` | A section of reusable snippets that can be reference in `config.file`. Custom snippets may be added in order to reduce redundancy. This is especially helpful when multiple `kubernetes_sd_configs` are use which usually have large parts in common. |
+| config.snippets.extraRelabelConfigs | list | `[]` | You can put here any additional relabel_configs to "kubernetes-pods" job |
+| config.snippets.extraScrapeConfigs | string | empty | You can put here any additional scrape configs you want to add to the config file. |
 | containerSecurityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true}` | The security context for containers |
 | defaultVolumeMounts | list | See `values.yaml` | Default volume mounts. Corresponds to `volumes`. |
 | defaultVolumes | list | See `values.yaml` | Default volumes that are mounted into pods. In most cases, these should not be changed. Use `extraVolumes`/`extraVolumeMounts` for additional custom volumes. |
 | extraArgs | list | `[]` |  |
 | extraEnv | list | `[]` | Extra environment variables |
 | extraEnvFrom | list | `[]` | Extra environment variables from secrets or configmaps |
+| extraObjects | list | `[]` | Extra K8s manifests to deploy |
 | extraPorts | object | `{}` | Configure additional ports and services. For each configured port, a corresponding service is created. See values.yaml for details |
 | extraVolumeMounts | list | `[]` |  |
 | extraVolumes | list | `[]` |  |
@@ -88,7 +92,7 @@ The new release which will pick up again from the existing `positions.yaml`.
 | image.repository | string | `"grafana/promtail"` | Docker image repository |
 | image.tag | string | `nil` | Overrides the image tag whose default is the chart's appVersion |
 | imagePullSecrets | list | `[]` | Image pull secrets for Docker images |
-| initContainer.enabled | bool | `true` | Specifies whether the init container for setting inotify max user instances is to be enabled |
+| initContainer.enabled | bool | `false` | Specifies whether the init container for setting inotify max user instances is to be enabled |
 | initContainer.fsInotifyMaxUserInstances | int | `128` | The inotify max user instances to configure |
 | initContainer.image.pullPolicy | string | `"IfNotPresent"` | Docker image pull policy for the init container image |
 | initContainer.image.registry | string | `"docker.io"` | The Docker registry for the init container |
@@ -96,6 +100,12 @@ The new release which will pick up again from the existing `positions.yaml`.
 | initContainer.image.tag | float | `1.33` | Docker tag for the init container |
 | livenessProbe | object | `{}` | Liveness probe |
 | nameOverride | string | `nil` | Overrides the chart's name |
+| networkPolicy.enabled | bool | `false` | Specifies whether Network Policies should be created |
+| networkPolicy.k8sApi.cidrs | list | `[]` | Specifies specific network CIDRs you want to limit access to |
+| networkPolicy.k8sApi.port | int | `8443` | Specify the k8s API endpoint port |
+| networkPolicy.metrics.cidrs | list | `[]` | Specifies specific network CIDRs which are allowed to access the metrics port. In case you use namespaceSelector, you also have to specify your kubelet networks here. The metrics ports are also used for probes. |
+| networkPolicy.metrics.namespaceSelector | object | `{}` | Specifies the namespaces which are allowed to access the metrics port |
+| networkPolicy.metrics.podSelector | object | `{}` | Specifies the Pods which are allowed to access the metrics port. As this is cross-namespace communication, you also neeed the namespaceSelector. |
 | nodeSelector | object | `{}` | Node selector for pods |
 | podAnnotations | object | `{}` | Pod annotations |
 | podLabels | object | `{}` | Pod labels |
@@ -114,10 +124,12 @@ The new release which will pick up again from the existing `positions.yaml`.
 | serviceMonitor.enabled | bool | `false` | If enabled, ServiceMonitor resources for Prometheus Operator are created |
 | serviceMonitor.interval | string | `nil` | ServiceMonitor scrape interval |
 | serviceMonitor.labels | object | `{}` | Additional ServiceMonitor labels |
+| serviceMonitor.metricRelabelings | list | `[]` | ServiceMonitor relabel configs to apply to samples as the last step before ingestion https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#relabelconfig (defines `metric_relabel_configs`) |
 | serviceMonitor.namespace | string | `nil` | Alternative namespace for ServiceMonitor resources |
 | serviceMonitor.namespaceSelector | object | `{}` | Namespace selector for ServiceMonitor resources |
+| serviceMonitor.relabelings | list | `[]` | ServiceMonitor relabel configs to apply to samples before scraping https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#relabelconfig (defines `relabel_configs`) |
 | serviceMonitor.scrapeTimeout | string | `nil` | ServiceMonitor scrape timeout in Go duration format (e.g. 15s) |
-| tolerations | list | `[{"effect":"NoSchedule","key":"node-role.kubernetes.io/master","operator":"Exists"}]` | Tolerations for pods. By default, pods will be scheduled on master nodes. |
+| tolerations | list | `[{"effect":"NoSchedule","key":"node-role.kubernetes.io/master","operator":"Exists"},{"effect":"NoSchedule","key":"node-role.kubernetes.io/control-plane","operator":"Exists"}]` | Tolerations for pods. By default, pods will be scheduled on master/control-plane nodes. |
 | updateStrategy | object | `{}` | The update strategy for the DaemonSet |
 
 ## Configuration
@@ -148,20 +160,8 @@ extraPorts:
       loadBalancerIP: 123.234.123.234
 
 config:
-  file: |
-    server:
-      http_listen_port: {{ .Values.config.serverPort }}
-
-    client:
-      url: {{ .Values.config.lokiAddress }}
-
-    positions:
-      filename: /run/promtail/positions.yaml
-
-    scrape_configs:
-      # This reuses the existing default scrape configs
-      {{- tpl .Values.config.snippets.scrapeConfigs . | nindent 2 }}
-
+  snippets:
+    extraScrapeConfigs: |
       # Add an additional scrape config for syslog
       - job_name: syslog
         syslog:
@@ -178,20 +178,8 @@ config:
 
 ```yaml
 config:
-  file: |
-    server:
-      http_listen_port: {{ .Values.config.serverPort }}
-
-    client:
-      url: {{ .Values.config.lokiAddress }}
-
-    positions:
-      filename: /run/promtail/positions.yaml
-
-    scrape_configs:
-      # This reuses the existing default scrape configs
-      {{- tpl .Values.config.snippets.scrapeConfigs . | nindent 2 }}
-
+  snippets:
+    extraScrapeConfigs: |
       # Add an additional scrape config for syslog
       - job_name: journal
         journal:
@@ -233,6 +221,7 @@ extraPorts:
 config:
   file: |
     server:
+      log_level: {{ .Values.config.logLevel }}
       http_listen_port: {{ .Values.config.serverPort }}
 
     client:
@@ -251,4 +240,19 @@ config:
             grpc_listen_port: {{ .Values.extraPorts.grpcPush.containerPort }}
           labels:
             pushserver: push1
+```
+
+### Customize client config options
+
+By default, promtail send logs scraped to `loki` server at `http://loki-gateway/loki/api/v1/push`.
+If you want to customize clients or add additional options to `loki`, please use the `clients` section. For example, to enable HTTP basic auth and include OrgID header, you can use:
+
+```yaml
+config:
+  clients:
+    - url: http://loki.server/loki/api/v1/push
+      tenant_id: 1
+      basic_auth:
+        username: loki
+        password: secret
 ```
