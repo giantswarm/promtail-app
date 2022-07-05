@@ -68,7 +68,7 @@
                             "items": {
                                 "type": "object",
                                 "properties": {
-                                    "docker": {
+                                    "cri": {
                                         "type": "object"
                                     }
                                 }
@@ -157,8 +157,14 @@
         "extraVolumes": {
             "type": "array"
         },
+        "extra_client_configs": {
+            "type": "object"
+        },
+        "extra_scrape_configs": {
+            "type": "object"
+        },
         "fullnameOverride": {
-            "type": "null"
+            "type": ["string", "null"]
         },
         "image": {
             "type": "object",
@@ -173,7 +179,7 @@
                     "type": "string"
                 },
                 "tag": {
-                    "type": "null"
+                    "type": ["string", "null"]
                 }
             }
         },
@@ -212,7 +218,7 @@
             "type": "object"
         },
         "nameOverride": {
-            "type": "null"
+            "type": ["string", "null"]
         },
         "networkPolicy": {
             "type": "object",
@@ -335,7 +341,7 @@
             }
         },
         "priorityClassName": {
-            "type": "null"
+            "type": ["string", "null"]
         },
         "rbac": {
             "type": "object",
@@ -380,31 +386,7 @@
             }
         },
         "resources": {
-            "type": "object",
-            "properties": {
-                "limits": {
-                    "type": "object",
-                    "properties": {
-                        "cpu": {
-                            "type": "string"
-                        },
-                        "memory": {
-                            "type": "string"
-                        }
-                    }
-                },
-                "requests": {
-                    "type": "object",
-                    "properties": {
-                        "cpu": {
-                            "type": "string"
-                        },
-                        "memory": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
+            "type": "object"
         },
         "serviceAccount": {
             "type": "object",
@@ -419,7 +401,7 @@
                     "type": "array"
                 },
                 "name": {
-                    "type": "null"
+                    "type": ["string", "null"]
                 }
             }
         },
@@ -433,7 +415,7 @@
                     "type": "boolean"
                 },
                 "interval": {
-                    "type": "null"
+                    "type": ["string", "null"]
                 },
                 "labels": {
                     "type": "object"
@@ -442,7 +424,7 @@
                     "type": "array"
                 },
                 "namespace": {
-                    "type": "null"
+                    "type": ["string", "null"]
                 },
                 "namespaceSelector": {
                     "type": "object"
@@ -451,7 +433,7 @@
                     "type": "array"
                 },
                 "scrapeTimeout": {
-                    "type": "null"
+                    "type": ["string", "null"]
                 }
             }
         },

@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Modified
+
+- latest upstream chart (6.0.2)
+- update values schema
+
+### Fixed
+
+- values schema accepts strings in all default-null fields, like "fullnameOverride"
+
 ## [0.4.0] - 2022-06-23
 
 ### Modified

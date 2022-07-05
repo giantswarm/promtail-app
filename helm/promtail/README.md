@@ -1,13 +1,14 @@
 # promtail
 
-![Version: 3.6.0](https://img.shields.io/badge/Version-3.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.2.1](https://img.shields.io/badge/AppVersion-2.2.1-informational?style=flat-square)
+![Version: 6.0.2](https://img.shields.io/badge/Version-6.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.5.0](https://img.shields.io/badge/AppVersion-2.5.0-informational?style=flat-square)
 
-An agent which ships logs to a Loki instance
+Promtail is an agent which ships the contents of local logs to a Loki instance
 
 ## Source Code
 
 * <https://github.com/grafana/loki>
-* <https://github.com/grafana/helm-charts>
+* <https://grafana.com/oss/loki/>
+* <https://grafana.com/docs/loki/latest/>
 * <https://github.com/giantswarm/grafana-helm-charts-upstream>
 
 ## Chart Repo
@@ -141,9 +142,13 @@ It is common to have multiple `kubernetes_sd_configs` that, in turn, usually nee
 Thus, extracting reusable snippets helps reduce redundancy and avoid copy/paste errors.
 See `values.yaml´ for details.
 Also, the following examples make use of this feature.
+
 For additional reference, please refer to Promtail's docs:
+
 https://grafana.com/docs/loki/latest/clients/promtail/configuration/
+
 ### Syslog Support
+
 ```yaml
 extraPorts:
   syslog:
@@ -154,6 +159,7 @@ extraPorts:
       type: LoadBalancer
       externalTrafficPolicy: Local
       loadBalancerIP: 123.234.123.234
+
 config:
   snippets:
     extraScrapeConfigs: |
@@ -166,8 +172,22 @@ config:
         relabel_configs:
           - source_labels:
               - __syslog_message_hostname
-            target_label: host
+            target_label: hostname
+
+          # example label values: kernel, CRON, kubelet
+          - source_labels:
+              - __syslog_message_app_name
+            target_label: app
+
+          # example label values: debug, notice, informational, warning, error
+          - source_labels:
+              - __syslog_message_severity
+            target_label: level
 ```
+
+Find additional source labels in the Promtail's docs:
+
+https://grafana.com/docs/loki/latest/clients/promtail/configuration/#syslog
 
 ### Journald Support
 
@@ -184,25 +204,52 @@ config:
             job: systemd-journal
         relabel_configs:
           - source_labels:
-              - '__journal__systemd_unit'
-            target_label: 'unit'
+              - __journal__hostname
+            target_label: hostname
+
+          # example label values: kubelet.service, containerd.service
           - source_labels:
-              - '__journal__hostname'
-            target_label: 'hostname'
-# Mount journal directory into promtail pods
+              - __journal__systemd_unit
+            target_label: unit
+
+          # example label values: debug, notice, info, warning, error
+          - source_labels:
+              - __journal_priority_keyword
+            target_label: level
+
+# Mount journal directory and machine-id file into promtail pods
 extraVolumes:
   - name: journal
     hostPath:
       path: /var/log/journal
+  - name: machine-id
+    hostPath:
+      path: /etc/machine-id
+
 extraVolumeMounts:
   - name: journal
     mountPath: /var/log/journal
     readOnly: true
+  - name: machine-id
+    mountPath: /etc/machine-id
+    readOnly: true
 ```
+
+Find additional configuration options in Promtail's docs:
+
+https://grafana.com/docs/loki/latest/clients/promtail/configuration/#journal
+
+More journal source labels can be found here https://www.freedesktop.org/software/systemd/man/systemd.journal-fields.html.
+> Note that each message from the journal may have a different set of fields and software may write an arbitrary set of custom fields for their logged messages. [(related issue)](https://github.com/grafana/loki/issues/2048#issuecomment-626234611)
+
+The machine-id needs to be available in the container as it is required for scraping.
+This is described in Promtail's scraping docs:
+
+https://grafana.com/docs/loki/latest/clients/promtail/scraping/#journal-scraping-linux-only
 
 ### Push API Support
 
-```
+```yaml
 extraPorts:
   httpPush:
     name: http-push
@@ -210,17 +257,22 @@ extraPorts:
   grpcPush:
     name: grpc-push
     containerPort: 3600
+
 config:
   file: |
     server:
       log_level: {{ .Values.config.logLevel }}
       http_listen_port: {{ .Values.config.serverPort }}
+
     client:
       url: {{ .Values.config.lokiAddress }}
+
     positions:
       filename: /run/promtail/positions.yaml
+
     scrape_configs:
       {{- tpl .Values.config.snippets.scrapeConfigs . | nindent 2 }}
+
       - job_name: push1
         loki_push_api:
           server:
