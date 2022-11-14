@@ -12,7 +12,7 @@ sources:
   - https://github.com/giantswarm/grafana-helm-charts-upstream
 upstreamChartURL: https://github.com/grafana/helm-charts
 upstreamChartVersion: 6.0.2
-icon: https://s.giantswarm.io/app-icons/grafana-loki/2/dark.svg
+icon: https://s.giantswarm.io/app-icons/loki-stack/1/dark.svg
 maintainers:
   - name: Loki Maintainers
     email: lokiproject@googlegroups.com
@@ -24,3 +24,4 @@ restrictions:
   namespaceSingleton: true
 annotations:
   application.giantswarm.io/team: atlas
+  ui.giantswarm.io/logo: https://s.giantswarm.io/app-icons/grafana-loki/2/dark.svg
