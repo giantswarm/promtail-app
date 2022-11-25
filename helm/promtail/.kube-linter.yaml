@@ -11,3 +11,5 @@ checks:
   - "no-rolling-update-strategy"
   - "non-isolated-pod"
   - "use-namespace"
+  - "dnsconfig-options"
+  - "no-node-affinity"
