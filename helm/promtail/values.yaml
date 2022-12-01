@@ -39,7 +39,9 @@ annotations: {}
 updateStrategy: {}
 
 # -- Pod labels
-podLabels: {}
+podLabels: {
+  giantswarm.io/monitoring: "true"
+}
 
 # -- Pod annotations
 podAnnotations: {}
