@@ -386,7 +386,31 @@
             }
         },
         "resources": {
-            "type": "object"
+            "type": "object",
+            "properties": {
+                "limits": {
+                    "type": "object",
+                    "properties": {
+                        "cpu": {
+                            "type": "string"
+                        },
+                        "memory": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "requests": {
+                    "type": "object",
+                    "properties": {
+                        "cpu": {
+                            "type": "string"
+                        },
+                        "memory": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
         },
         "serviceAccount": {
             "type": "object",
@@ -402,6 +426,14 @@
                 },
                 "name": {
                     "type": ["string", "null"]
+                }
+            }
+        },
+        "serviceLabels": {
+            "type": "object",
+            "properties": {
+                "giantswarm.io/monitoring": {
+                    "type": "string"
                 }
             }
         },
