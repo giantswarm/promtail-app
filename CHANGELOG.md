@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Modified
 
-- Added 
+- Added headless service with monitoring label
 
 ## [0.4.1] - 2022-07-06
 
