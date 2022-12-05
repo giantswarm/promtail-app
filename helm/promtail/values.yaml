@@ -41,6 +41,10 @@ updateStrategy: {}
 # -- Pod labels
 podLabels: {}
 
+serviceLabels: {
+  giantswarm.io/monitoring: "true"
+}
+
 # -- Pod annotations
 podAnnotations: {}
 #  prometheus.io/scrape: "true"
