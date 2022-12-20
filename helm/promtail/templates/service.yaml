@@ -9,7 +9,7 @@ metadata:
   {{- end }}
   labels:
     {{- include "promtail.selectorLabels" . | nindent 8 }}
-    {{- with .Values.serviceLabels }}
+    {{- with .Values.promtail.serviceLabels }}
     {{- toYaml . | nindent 8 }}
     {{- end }}
 spec:
@@ -19,4 +19,4 @@ spec:
   ports:
     - protocol: TCP
       port: 9091
-      targetPort: {{ .Values.config.serverPort }}
+      targetPort: {{ .Values.promtail.config.serverPort }}
