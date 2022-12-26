@@ -1,17 +1,9 @@
-# -- In order for the "checksum/config" annotation from the daemonset to work, it needs to have the secret.yaml file in the template folder 
-# However one doesn't need this secret to be generated as the upstream one will 
-secret:
-  enabled: false
-
 promtail:  
   # -- Overrides the chart's name
   nameOverride: null
 
   # -- Overrides the chart's computed fullname
   fullnameOverride: null
-
-  daemonset:
-    enabled: false
 
   initContainer:
     # -- Specifies whether the init container for setting inotify max user instances is to be enabled

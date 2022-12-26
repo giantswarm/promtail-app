@@ -3,6 +3,7 @@ Common labels
 */}}
 {{- define "promtail.labels" -}}
 helm.sh/chart: {{ include "promtail.chart" . }}
+giantswarm.io/service-type: "managed"
 {{ include "promtail.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
