@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Modified
 
 - Migrated to chart dependency
+- ⚠ Major upgrade, breaking changes
+  - values structure changes. We rely on a subchart, meaning most of previous setup goes to a `promtail` section
 
 ## [0.5.0] - 2022-12-05
 
