@@ -5,21 +5,6 @@ promtail:
   # -- Overrides the chart's computed fullname
   fullnameOverride: null
 
-  initContainer:
-    # -- Specifies whether the init container for setting inotify max user instances is to be enabled
-    enabled: false
-    image:
-      # -- The Docker registry for the init container
-      registry: docker.io
-      # -- Docker image repository for the init container
-      repository: busybox
-      # -- Docker tag for the init container
-      tag: 1.33
-      # -- Docker image pull policy for the init container image
-      pullPolicy: IfNotPresent
-    # -- The inotify max user instances to configure
-    fsInotifyMaxUserInstances: 128
-
   image:
     # -- The Docker registry
     registry: quay.io
@@ -29,9 +14,6 @@ promtail:
     tag: null
     # -- Docker image pull policy
     pullPolicy: IfNotPresent
-
-  # -- Image pull secrets for Docker images
-  imagePullSecrets: []
 
   # -- Annotations for the DaemonSet
   annotations: {}
@@ -53,21 +35,6 @@ promtail:
 
   # -- The name of the PriorityClass
   priorityClassName: null
-
-  # -- Liveness probe
-  livenessProbe: {}
-
-  # -- Readiness probe
-  # @default -- See `values.yaml`
-  readinessProbe:
-    failureThreshold: 5
-    httpGet:
-      path: /ready
-      port: http-metrics
-    initialDelaySeconds: 10
-    periodSeconds: 10
-    successThreshold: 1
-    timeoutSeconds: 1
 
   # -- Resource requests and limits
   resources:
@@ -107,59 +74,6 @@ promtail:
     imagePullSecrets: []
     # -- Annotations for the service account
     annotations: {}
-
-  # -- Node selector for pods
-  nodeSelector: {}
-
-  # -- Affinity configuration for pods
-  affinity: {}
-
-  # -- Tolerations for pods. By default, pods will be scheduled on master/control-plane nodes.
-  tolerations:
-    - key: node-role.kubernetes.io/master
-      operator: Exists
-      effect: NoSchedule
-    - key: node-role.kubernetes.io/control-plane
-      operator: Exists
-      effect: NoSchedule
-
-  # -- Default volumes that are mounted into pods. In most cases, these should not be changed.
-  # Use `extraVolumes`/`extraVolumeMounts` for additional custom volumes.
-  # @default -- See `values.yaml`
-  defaultVolumes:
-    - name: run
-      hostPath:
-        path: /run/promtail
-    - name: containers
-      hostPath:
-        path: /var/lib/docker/containers
-    - name: pods
-      hostPath:
-        path: /var/log/pods
-
-  # -- Default volume mounts. Corresponds to `volumes`.
-  # @default -- See `values.yaml`
-  defaultVolumeMounts:
-    - name: run
-      mountPath: /run/promtail
-    - name: containers
-      mountPath: /var/lib/docker/containers
-      readOnly: true
-    - name: pods
-      mountPath: /var/log/pods
-      readOnly: true
-
-  # Extra volumes to be added in addition to those specified under `defaultVolumes`.
-  extraVolumes: []
-
-  # Extra volume mounts together. Corresponds to `extraVolumes`.
-  extraVolumeMounts: []
-
-  # Extra args for the Promtail container.
-  extraArgs: []
-  # -- Example:
-  # -- extraArgs:
-  # --   - -client.external-labels=hostname=$(HOSTNAME)
 
   # -- Extra environment variables
   extraEnv: []
@@ -211,30 +125,6 @@ promtail:
   #      loadBalancerIP: null
   #      loadBalancerSourceRanges: []
   #      externalTrafficPolicy: null
-
-  # -- PodSecurityPolicy configuration.
-  # @default -- See `values.yaml`
-  podSecurityPolicy:
-    privileged: true
-    allowPrivilegeEscalation: true
-    volumes:
-      - 'secret'
-      - 'hostPath'
-      - 'downwardAPI'
-    hostNetwork: false
-    hostIPC: false
-    hostPID: false
-    runAsUser:
-      rule: 'RunAsAny'
-    seLinux:
-      rule: 'RunAsAny'
-    supplementalGroups:
-      rule: 'RunAsAny'
-    fsGroup:
-      rule: 'RunAsAny'
-    readOnlyRootFilesystem: true
-    requiredDropCapabilities:
-      - ALL
 
   # -- You can put here any keys that will be directly added to the config file's 'client' block.
   # @default -- empty
@@ -380,34 +270,3 @@ promtail:
       scrape_configs:
         {{- tpl .Values.config.snippets.scrapeConfigs . | nindent 2 }}
         {{- tpl .Values.config.snippets.extraScrapeConfigs . | nindent 2 }}
-
-  networkPolicy:
-    # -- Specifies whether Network Policies should be created
-    enabled: false
-    metrics:
-      # -- Specifies the Pods which are allowed to access the metrics port.
-      # As this is cross-namespace communication, you also neeed the namespaceSelector.
-      podSelector: {}
-      # -- Specifies the namespaces which are allowed to access the metrics port
-      namespaceSelector: {}
-      # -- Specifies specific network CIDRs which are allowed to access the metrics port.
-      # In case you use namespaceSelector, you also have to specify your kubelet networks here.
-      # The metrics ports are also used for probes.
-      cidrs: []
-    k8sApi:
-      # -- Specify the k8s API endpoint port
-      port: 8443
-      # -- Specifies specific network CIDRs you want to limit access to
-      cidrs: []
-
-  # -- Extra K8s manifests to deploy
-  extraObjects: []
-    # - apiVersion: "kubernetes-client.io/v1"
-    #   kind: ExternalSecret
-    #   metadata:
-    #     name: promtail-secrets
-    #   spec:
-    #     backendType: gcpSecretsManager
-    #     data:
-    #       - key: promtail-oauth2-creds
-    #         name: client_secret
