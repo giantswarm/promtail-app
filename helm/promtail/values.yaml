@@ -1,4 +1,4 @@
-promtail:  
+promtail:
   # -- Overrides the chart's name
   nameOverride: null
 
