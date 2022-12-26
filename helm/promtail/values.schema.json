@@ -106,14 +106,6 @@
                         }
                     }
                 },
-                "daemonset": {
-                    "type": "object",
-                    "properties": {
-                        "enabled": {
-                            "type": "boolean"
-                        }
-                    }
-                },
                 "defaultVolumeMounts": {
                     "type": "array",
                     "items": {
@@ -499,14 +491,6 @@
                 },
                 "updateStrategy": {
                     "type": "object"
-                }
-            }
-        },
-        "secret": {
-            "type": "object",
-            "properties": {
-                "enabled": {
-                    "type": "boolean"
                 }
             }
         }
