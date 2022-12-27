@@ -1,3 +1,9 @@
+service:
+  name: promtail-giantswarm-monitoring
+  labels: {
+    giantswarm.io/monitoring: "true"
+  }
+
 promtail:
   # -- Overrides the chart's name
   nameOverride: null
@@ -23,10 +29,6 @@ promtail:
 
   # -- Pod labels
   podLabels: {}
-
-  serviceLabels: {
-    giantswarm.io/monitoring: "true"
-  }
 
   # -- Pod annotations
   podAnnotations: {}

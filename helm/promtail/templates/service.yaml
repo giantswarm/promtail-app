@@ -1,7 +1,8 @@
+{{- if not .Values.promtail.serviceMonitor.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "promtail.fullname" $ }}
+  name: {{ .Values.service.name }}
   namespace: {{ $.Release.Namespace }}
   {{- with .annotations }}
   annotations:
@@ -9,7 +10,7 @@ metadata:
   {{- end }}
   labels:
     {{- include "promtail.selectorLabels" . | nindent 8 }}
-    {{- with .Values.promtail.serviceLabels }}
+    {{- with .Values.service.labels }}
     {{- toYaml . | nindent 8 }}
     {{- end }}
 spec:
@@ -20,3 +21,4 @@ spec:
     - protocol: TCP
       port: 9091
       targetPort: {{ .Values.promtail.config.serverPort }}
+{{- end }}
