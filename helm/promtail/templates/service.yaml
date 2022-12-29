@@ -1,16 +1,18 @@
+{{- if .Values.giantswarm.labelMonitoring.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "promtail.fullname" $ }}
+  name: {{ .Values.giantswarm.labelMonitoring.name }}
   namespace: {{ $.Release.Namespace }}
   {{- with .annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
   labels:
-    {{- include "promtail.selectorLabels" . | nindent 8 }}
-    {{- with .Values.serviceLabels }}
-    {{- toYaml . | nindent 8 }}
+    {{- include "promtail.selectorLabels" . | nindent 4 }}
+    giantswarm.io/monitoring: "true"
+    {{- with .Values.giantswarm.labelMonitoring.serviceLabels }}
+    {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:
   selector:
@@ -18,5 +20,6 @@ spec:
   clusterIP: "None"
   ports:
     - protocol: TCP
-      port: 9091
-      targetPort: {{ .Values.config.serverPort }}
+      port: 3101
+      targetPort: http-metrics
+{{- end }}
