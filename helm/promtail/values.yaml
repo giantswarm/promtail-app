@@ -9,7 +9,7 @@ promtail:
 
   image:
     # -- The Docker registry
-    registry: quay.io
+    registry: docker.io
     # -- Docker image repository
     repository: giantswarm/promtail
     # -- Overrides the image tag whose default is the chart's appVersion

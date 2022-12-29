@@ -20,6 +20,6 @@ spec:
   clusterIP: "None"
   ports:
     - protocol: TCP
-      port: 9091
-      targetPort: 3101
+      port: 3101
+      targetPort: http-metrics
 {{- end }}
