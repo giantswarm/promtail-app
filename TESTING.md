@@ -3,25 +3,26 @@
 ## Install the new Promtail version
 
 * Choose a test cluster: `opsctl login gauss`
-* Suspend these 2 flux kustomizations:`flux suspend kustomization -n flux-giantswarm collection; flux suspend kustomization -n flux-giantswarm flux`
+* Either create a draft PR or directly use your branch
 
 ### The "easy" way
 
 * Deploy the new Promtail version using opsctl (replace `test-branch` with your branch's name): `opsctl deploy --use-kubeconfig promtail-app@test-branch`
+* Make sure promtail is deployed with the right version: `kubectl get app -n giantswarm promtail`
 
 ### The "hard" way
 
 If for some reason you can't use the `opsctl deploy` command or don't want to:
-* Either create a draft PR or directly use your branch
 * Look at the build step `ci/circleci: package and push promtail chart`, step `Push chart archive to OCI registry app catalog`
     * Take note of pushed image name
-* Edit the `promtail` app: `kubectl edit -n giantswarm promtail`
+* Suspend these 2 flux kustomizations:`flux suspend kustomization -n flux-giantswarm collection; flux suspend kustomization -n flux-giantswarm flux`
+* Edit the `promtail` app: `kubectl edit app -n giantswarm promtail`
 * Update catalog name and image version according to the image name shown in build logs
 * Make sure promtail is deployed with the right version: `kubectl get app -n giantswarm promtail`
 
 ## Make sure Promtail is scraped by prometheus
 
-* Open prometheus on the MC from the installation: `opsctl open -i gauss -a pometheus --workload-cluster gauss`
+* Open prometheus on the MC from the installation: `opsctl open -i gauss -a prometheus --workload-cluster gauss`
 * Go to the *Status->Targets* section and search for `promtail` in the search bar. You should see as many endpoints as there are nodes on the cluster (8/8 on gauss)
 * You might want to take screenshots as it could prove useful for the PR.
 * Go to the *Graph* section and execute the following query: `promtail_build_info`. As for the previous step, you should see as many metrics as there are nodes on the cluster (8 on gauss) with value 1.
@@ -38,4 +39,4 @@ If for some reason you can't use the `opsctl deploy` command or don't want to:
 
 ## Clean environment
 
-* Once you're finished testing, simply resume flux: `flux resume kustomization -n flux-giantswarm collection; flux resume kustomization -n flux-giantswarm flux`. (You might consider not resuming flux when working on gauss as many users might need it to stay suspended)
+* Once you're finished testing, simply resume flux: `flux resume kustomization -n flux-giantswarm collection; flux resume kustomization -n flux-giantswarm flux`. (You might consider not resuming flux when working on test installations as many users might need it to stay suspended)
