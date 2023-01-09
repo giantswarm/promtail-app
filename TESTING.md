@@ -13,12 +13,7 @@
 ### The "hard" way
 
 If for some reason you can't use the `opsctl deploy` command or don't want to:
-* Look at the build step `ci/circleci: package and push promtail chart`, step `Push chart archive to OCI registry app catalog`
-    * Take note of pushed image name
-* Suspend these 2 flux kustomizations:`flux suspend kustomization -n flux-giantswarm collection; flux suspend kustomization -n flux-giantswarm flux`
-* Edit the `promtail` app: `kubectl edit app -n giantswarm promtail`
-* Update catalog name and image version according to the image name shown in build logs
-* Make sure promtail is deployed with the right version: `kubectl get app -n giantswarm promtail`
+* Follow the instructions to manually deploy an app [here](https://intranet.giantswarm.io/docs/dev-and-releng/how-to-manually-update-an-app/)
 
 ## Make sure Promtail is scraped by prometheus
 
