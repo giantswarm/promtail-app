@@ -9,6 +9,15 @@ Please note that you can run multiple `promtail` instances on the same cluster (
 but it's up to you to provide a reasonable config for them (and ie. avoid
 duplication of scrapes).
 
+**Table of Contents:**
+
+- [Promtail App](#promtail-app)
+- [Install](#install)
+- [Upgrading](#upgrading)
+- [Configuration](#configuration)
+- [Limitations](#limitations)
+- [Credit](#credits)
+
 ## Install
 
 There are several ways to install this app onto a workload cluster.
@@ -24,7 +33,7 @@ A major chart version change (like v0.5.0 -> v1.0.0) indicates that there is an 
 
 ### From 0.x to 1.x
 
-As described in the [changelog](https://github.com/giantswarm/promtail-app/blob/master/CHANGELOG.md#100---2022-12-29), the structure of the values changed since we decided to rely on helm chart dependency mechanism to manage the application.
+The structure of the values changed in 1.0.0 as we now rely on helm chart dependency mechanism to manage the application.
 
 Before you upgrade, you must edit your values (in both configmaps and secrets) to follow the new structure from:
 

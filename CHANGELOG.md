@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Modified
 
 - Migrated to chart dependency
-- ⚠ Major upgrade, breaking changes
+- ⚠ Major upgrade, [breaking changes](https://github.com/giantswarm/promtail-app/blob/master/README.md#from-0x-to-1x)
   - values structure changes. We rely on a subchart, meaning all of previous setup goes to a `promtail` section
 
 ## [0.5.0] - 2022-12-05
