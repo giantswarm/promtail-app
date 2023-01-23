@@ -66,7 +66,7 @@ As you can see, in the new format, all properties coming from the subchart as de
 
 ## Configuration
 
-By default, Promtail is configured to forwards logs from all Kubernetes pods
+By default, Promtail is configured to read logs from all Kubernetes pods
 and from the `systemd-journald` logging service running on the machine the agent is deployed on.
 
 As this application is build upon the Grafana promtail upstream chart as a dependency, most of the values to override can be found [here](https://github.com/grafana/helm-charts/blob/promtail-6.0.2/charts/promtail/README.md#values).
