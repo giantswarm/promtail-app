@@ -9,7 +9,7 @@ promtail:
   config:
     clients:
     - url: "https://loki.m2h60.k8s.gauss.eu-west-1.aws.gigantic.io/loki/api/v1/push"
-      tenant_id: 1
+      tenant_id: gorilla-loki0
       # basic auth data
       basic_auth:
         username: loki
