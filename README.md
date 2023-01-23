@@ -1,41 +1,145 @@
-# Promtail chart
+# Promtail App
 
 [![CircleCI](https://circleci.com/gh/giantswarm/promtail-app.svg?style=shield)](https://circleci.com/gh/giantswarm/promtail-app)
 
-Promtail is a logging agent meant to work with Loki logging server. This chart is meant
-primarily to be used with our [Loki app](https://github.com/giantswarm/loki-app).
+Giant Swarm offers a Promtail App which can be installed in any clusters.
+It deploys a [Promtail agent](https://grafana.com/docs/loki/latest/clients/promtail/) used to collect and ship logs (through the HTTP protocol) to a private Grafana Loki instance.
 
-Promtail works over the network using HTTP protocol, so can be used on any cluster
-to forward its logs to a Loki instance.
-
-Please note that you can run multiple `promtail` instances on the same cluster,
+Please note that you can run multiple `promtail` instances on the same cluster (albeit in different namespaces),
 but it's up to you to provide a reasonable config for them (and ie. avoid
-duplication). The default config forwards logs from all Kubernetes pods
-and from `systemd-journald` logging service in the operating system.
+duplication of scrapes).
 
-## Installing
+## Install
 
-There are 3 ways to install this app onto a tenant cluster.
+There are several ways to install this app onto a workload cluster.
 
-1. [Using our web interface](https://docs.giantswarm.io/reference/web-interface/app-catalog/)
-2. [Using our API](https://docs.giantswarm.io/api/#operation/createClusterAppV5)
-3. Directly creating the App custom resource on the Control Plane.
+- [Using GitOps to instantiate the App](https://docs.giantswarm.io/advanced/gitops/#installing-managed-apps)
+- [Using our web interface](https://docs.giantswarm.io/ui-api/web/app-platform/#installing-an-app).
+- By creating an [App resource](https://docs.giantswarm.io/ui-api/management-api/crd/apps.application.giantswarm.io/) in the management cluster as explained in [Getting started with App Platform](https://docs.giantswarm.io/app-platform/getting-started/).
 
-## Configuring
+## Upgrading
+
+### Upgrading an existing Release to a new major version
+A major chart version change (like v0.5.0 -> v1.0.0) indicates that there is an incompatible breaking change needing manual actions.
+
+### From 0.x to 1.x
+
+As described in the [changelog](https://github.com/giantswarm/promtail-app/blob/master/CHANGELOG.md#100---2022-12-29), the structure of the values changed since we decided to rely on helm chart dependency mechanism to manage the application.
+
+Before you upgrade, you must edit your values (in both configmaps and secrets) to follow the new structure from:
+
+```yaml
+# old values.yaml structure
+resources:
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+```
+
+To:
+
+```yaml
+# new values.yaml structure
+promtail:
+  resources:
+    limits:
+      cpu: 200m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+```
+
+As you can see, in the new format, all properties coming from the subchart as described [below](#configuration), must be moved under a `promtail:` section.
+
+## Configuration
+
+By default, Promtail is configured to forwards logs from all Kubernetes pods
+and from the `systemd-journald` logging service running on the machine the agent is deployed on.
+
+As this application is build upon the Grafana promtail upstream chart as a dependency, most of the values to override can be found [here](https://github.com/grafana/helm-charts/blob/promtail-6.0.2/charts/promtail/README.md#values).
+
+Some samples can be found [here](./sample_configs/)
+
+The Giant Swarm default values can also be overriden but we advise against it.
 
 ### values.yaml
+
 **This is an example of a values file you could upload using our web interface.**
-```
+
+```yaml
 # values.yaml
-
+promtail:
+  resources:
+    limits:
+      cpu: 200m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
 ```
 
-## Source code origin
+### Sample App CR and ConfigMap for the management cluster
 
-The source code in `helm/promtail` is a git-subtree coming from the
-<https://github.com/giantswarm/grafana-helm-charts-upstream>. Giant Swarm uses that
-repository to track and adjust or charts maintained by Grafana Labs.
+If you have access to the Kubernetes API on the management cluster, you could create
+the App CR and ConfigMap directly.
+
+Here is an example that would install the app to
+workload cluster `abc12`:
+
+```yaml
+# appCR.yaml
+apiVersion: application.giantswarm.io/v1alpha1
+kind: App
+metadata:
+  labels:
+  name: promtail-app
+  # workload cluster resources live in a namespace with the same ID as the
+  # workload cluster.
+  namespace: abc12
+spec:
+  name: promtail-app
+  namespace: promtail
+  catalog: giantswarm
+  version: 2.2.0
+  userConfig:
+    configMap:
+      name: promtail-app-user-values
+      namespace: abc12
+```
+
+```yaml
+# user-values-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-ingress-controller-app-user-values
+  namespace: abc12
+data:
+  values: |
+    promtail:
+      # -- Resource requests and limits
+      resources:
+        limits:
+          cpu: 200m
+          memory: 256Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
+```
+
+See our [full reference on how to configure apps](https://docs.giantswarm.io/app-platform/app-configuration/) for more details.
+
+## Limitations
+
+The application and its default values have been tailored to work inside Giant Swarm clusters and to connect to our managed [Loki app](https://github.com/giantswarm/loki-app).
+If you want to use it for any other scenario, know that you might need to adjust some values.
 
 ## Credit
 
-* <https://github.com/grafana/helm-charts/tree/main/charts/loki-distributed>
+This application is installating the upstream chart below with defaults to ensure it runs smoothly in Giant Swarm clusters.
+
+* <https://github.com/grafana/helm-charts/tree/main/charts/promtail>
