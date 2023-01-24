@@ -6,7 +6,6 @@ giantswarm:
     serviceLabels: {}
 
 promtail:
-
   image:
     # -- The Docker registry
     registry: docker.io
