@@ -6,6 +6,10 @@ giantswarm:
     serviceLabels: {}
 
 promtail:
+  rbac:
+    # -- Specifies whether a PodSecurityPolicy is to be created
+    pspEnabled: true
+
   image:
     # -- The Docker registry
     registry: docker.io
