@@ -1,5 +1,10 @@
 # Contributing Guidelines
 
+## Required tooling
+
+- [Helm 3](https://helm.sh/docs/intro/install/): Most popular Kubernetes templating tool.
+- [Helm Schema-gen](https://github.com/mihaisee/helm-schema-gen.git): can be installed using `helm plugin install https://github.com/mihaisee/helm-schema-gen.git`. This tool is used to generate the json schema of the helm chart
+
 ## Upgrading
 
 * change the `promtail` upstream version in Chart dependencies (`helm/promtail/Chart.yaml`)
@@ -7,7 +12,7 @@
 * re-generate `helm/promtail/values.schema.json`:
   * `helm schema-gen helm/promtail/values.yaml > helm/promtail/values.schema.json` to re-generate the file.
   * `sed -i 's/"type": "null"/"type": ["string", "null"]/g' helm/promtail/values.schema.json` to accept strings for all null values.
-* update the link in the `Configuration` section of the Readmeto point to the new tag configuration.
+* update the link in the [`Configuration`](./README.md#configuration) section of the Readmeto point to the new tag configuration.
 
 ## Testing
 

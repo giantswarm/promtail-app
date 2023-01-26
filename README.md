@@ -2,7 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/giantswarm/promtail-app.svg?style=shield)](https://circleci.com/gh/giantswarm/promtail-app)
 
-Giant Swarm offers a Promtail App which can be installed in any clusters.
+Giant Swarm offers Promtail as a [managed app](https://docs.giantswarm.io/changes/managed-apps/) which can be installed in any clusters.
 It deploys a [Promtail agent](https://grafana.com/docs/loki/latest/clients/promtail/) used to collect and ship logs (through the HTTP protocol) to a private Grafana Loki instance.
 
 Please note that you can run multiple `promtail` instances on the same cluster (albeit in different namespaces),
@@ -11,7 +11,6 @@ duplication of scrapes).
 
 **Table of Contents:**
 
-- [Promtail App](#promtail-app)
 - [Install](#install)
 - [Upgrading](#upgrading)
 - [Configuration](#configuration)
@@ -149,6 +148,6 @@ If you want to use it for any other scenario, know that you might need to adjust
 
 ## Credit
 
-This application is installating the upstream chart below with defaults to ensure it runs smoothly in Giant Swarm clusters.
+This application is installing the upstream chart below with defaults to ensure it runs smoothly in Giant Swarm clusters.
 
 * <https://github.com/grafana/helm-charts/tree/main/charts/promtail>
