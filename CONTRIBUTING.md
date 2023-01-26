@@ -12,7 +12,7 @@
 * re-generate `helm/promtail/values.schema.json`:
   * `helm schema-gen helm/promtail/values.yaml > helm/promtail/values.schema.json` to re-generate the file.
   * `sed -i 's/"type": "null"/"type": ["string", "null"]/g' helm/promtail/values.schema.json` to accept strings for all null values.
-* update the link in the [`Configuration`](./README.md#configuration) section of the Readmeto point to the new tag configuration.
+* update the link in the [`Configuration`](./README.md#configuration) section of the README to point to the new tag configuration.
 
 ## Testing
 
