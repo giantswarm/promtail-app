@@ -1,9 +1,15 @@
-
 promtail:
-  # make promtail print config on start
   extraArgs:
+    # make promtail print config on start
     - -log-config-reverse-order
-
+    # enable config env variable substitution 
+    - '-config.expand-env=true'
+  extraEnv:
+    # get host name from the pod spec
+    - name: HOSTNAME
+      valueFrom:
+        fieldRef:
+          fieldPath: spec.nodeName
   # Information about the Loki endpoint to connect to. Currently the chart supports
   # only a single upstream connection.
   config:
@@ -29,30 +35,27 @@ promtail:
 
     snippets:
       extraScrapeConfigs: |
-        # this one includes also system logs reported by systemd-journald
-        - job_name: systemd_journal
-          journal:
-            path: /run/log/journal
-            max_age: 12h
-            json: true
-          relabel_configs:
-            - source_labels: ['__journal__systemd_unit']
-              target_label: 'systemd_unit'
-            - source_labels: ['__journal__hostname']
-              target_label: 'hostname'
+        # adds kubernetes audit logs located at /var/log/apiserver/ with the hostname env variable substituted
+        - job_name: kubernetes-audit
+          static_configs:
+          - targets:
+            - localhost
+            labels:
+              __path__: /var/log/apiserver/*.log
+              hostname: $HOSTNAME
 
   # additional volume mounts required for journal login to work on flatcar linux
   extraVolumes:
-    - name: journal
+    - name: varlog
       hostPath:
-        path: /run/log/journal/
+        path: /var/log/
   #  - name: htpasswd
   #    secret:
   #      secretName: promtail-htpasswd
 
   extraVolumeMounts:
-    - name: journal
-      mountPath: /run/log/journal/
+    - name: varlog
+      mountPath: /var/log/
       readOnly: true
   #  - name: htpasswd
   #    mountPath: /etc/promtail.htpasswd/

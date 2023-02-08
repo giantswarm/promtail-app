@@ -70,7 +70,9 @@ and from the `systemd-journald` logging service running on the machine the agent
 
 As this application is build upon the Grafana promtail upstream chart as a dependency, most of the values to override can be found [here](https://github.com/grafana/helm-charts/blob/promtail-6.0.2/charts/promtail/README.md#values).
 
-Some samples can be found [here](./sample_configs/)
+Examples:
+- [Journald configuration](./examples/values-journald.yaml)
+- [Kubernetes audit logs configuration](./examples/values-kubernetes-audit-logs.yaml)
 
 The Giant Swarm default values can also be overriden but we advise against it.
 
