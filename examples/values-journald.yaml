@@ -1,0 +1,58 @@
+promtail:
+  extraArgs:
+    # make promtail print config on start
+    - -log-config-reverse-order
+
+  # Information about the Loki endpoint to connect to. Currently the chart supports
+  # only a single upstream connection.
+  config:
+    clients:
+    - url: "https://loki.m2h60.k8s.gauss.eu-west-1.aws.gigantic.io/loki/api/v1/push"
+      tenant_id: gorilla-loki0
+      # basic auth data
+      basic_auth:
+        username: loki
+        password: secret
+
+      # maximum backoff config for client to try connect to a server when it's unavailable
+      # please consult promtail docs for an exact description how it works (it's not total
+      # time to wait for the server to come up!)
+      backoff_config:
+        max_period: 10m
+
+      # this set of labels will be added to every log entry forwarded by this promtail
+      # instance
+      external_labels:
+        installation: gorilla
+        cluster: loki0
+
+    snippets:
+      extraScrapeConfigs: |
+        # this one includes also system logs reported by systemd-journald
+        - job_name: systemd_journal
+          journal:
+            path: /run/log/journal
+            max_age: 12h
+            json: true
+          relabel_configs:
+            - source_labels: ['__journal__systemd_unit']
+              target_label: 'systemd_unit'
+            - source_labels: ['__journal__hostname']
+              target_label: 'hostname'
+
+  # additional volume mounts required for journal login to work on flatcar linux
+  extraVolumes:
+    - name: journal
+      hostPath:
+        path: /run/log/journal/
+  #  - name: htpasswd
+  #    secret:
+  #      secretName: promtail-htpasswd
+
+  extraVolumeMounts:
+    - name: journal
+      mountPath: /run/log/journal/
+      readOnly: true
+  #  - name: htpasswd
+  #    mountPath: /etc/promtail.htpasswd/
+  #    readOnly: true
