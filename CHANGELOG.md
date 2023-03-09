@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## Changed
+### Removed
+
+- Remove namespace singleton temporarily, as it has some issues
+
+### Changed
 
 - Updated upstream chart from v6.8.2 to v6.8.3
 - Updated app from 2.7.2 to 2.7.3
