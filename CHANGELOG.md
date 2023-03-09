@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.2] - 2023-03-09
+
 ### Removed
 
 - Remove namespace singleton temporarily, as it has some issues
@@ -111,7 +113,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### changes
 - first release
 
-[Unreleased]: https://github.com/giantswarm/promtail-app/compare/v1.0.1...HEAD
+[Unreleased]: https://github.com/giantswarm/promtail-app/compare/v1.0.2...HEAD
+[1.0.2]: https://github.com/giantswarm/promtail-app/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/giantswarm/promtail-app/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/giantswarm/promtail-app/compare/v0.5.0...v1.0.0
 [0.5.0]: https://github.com/giantswarm/promtail-app/compare/v0.4.1...v0.5.0
