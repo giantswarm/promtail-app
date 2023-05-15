@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Upgrade promtail chart: 6.10.0 => 6.11.2
+- Upgrade promtail: 2.7.4 => 2.8.2
+
 ## [1.0.3] - 2023-04-17
 
 ### Changed
