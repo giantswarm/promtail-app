@@ -126,7 +126,7 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: nginx-ingress-controller-app-user-values
+  name: promtail-app-user-values
   namespace: abc12
 data:
   values: |
