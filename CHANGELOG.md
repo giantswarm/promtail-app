@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add Kyverno Policy Exceptions.
+
 ## [1.1.0] - 2023-05-15
 
 - Upgrade promtail chart: 6.10.0 => 6.11.2

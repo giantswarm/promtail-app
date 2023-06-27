@@ -5,6 +5,11 @@ giantswarm:
     name: promtail-giantswarm-monitoring
     serviceLabels: {}
 
+# Enable Kyverno PolicyException
+kyvernoPolicyExceptions:
+  enabled: true
+  namespace: giantswarm
+
 promtail:
   rbac:
     # -- Specifies whether a PodSecurityPolicy is to be created
