@@ -19,9 +19,6 @@ spec:
     {{- include "promtail.selectorLabels" $ | nindent 4 }}
   clusterIP: "None"
   ports:
-    - protocol: TCP
-      port: 3101
-      targetPort: http-metrics
     - name: http
       port: 8000
 {{- end }}
