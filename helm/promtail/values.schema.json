@@ -2,25 +2,6 @@
     "$schema": "http://json-schema.org/schema#",
     "type": "object",
     "properties": {
-        "giantswarm": {
-            "type": "object",
-            "properties": {
-                "labelMonitoring": {
-                    "type": "object",
-                    "properties": {
-                        "enabled": {
-                            "type": "boolean"
-                        },
-                        "name": {
-                            "type": "string"
-                        },
-                        "serviceLabels": {
-                            "type": "object"
-                        }
-                    }
-                }
-            }
-        },
         "kyvernoPolicyExceptions": {
             "type": "object",
             "properties": {
