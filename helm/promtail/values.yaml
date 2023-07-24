@@ -14,7 +14,7 @@ promtail:
   rbac:
     # -- Specifies whether a PodSecurityPolicy is to be created
     pspEnabled: true
-  
+
   serviceMonitor:
     enabled: true
     interval: "60s"
