@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Upgrade promtail chart: 6.11.7 => 6.14.1
+    - Added support for VPA
+- Upgrade promtail: 2.8.2 => 2.8.3
+
 ## [1.2.0] - 2023-07-24
 
 ### Changed
