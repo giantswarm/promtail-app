@@ -7,6 +7,9 @@ promtail:
   rbac:
     # -- Specifies whether a PodSecurityPolicy is to be created
     pspEnabled: true
+  
+  networkPolicy:
+    enabled: true
 
   serviceMonitor:
     enabled: true
