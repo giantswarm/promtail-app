@@ -3,6 +3,9 @@ kyvernoPolicyExceptions:
   enabled: true
   namespace: giantswarm
 
+ciliumNetworkPolicy:
+  enabled: true
+
 promtail:
   rbac:
     # -- Specifies whether a PodSecurityPolicy is to be created
