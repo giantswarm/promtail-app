@@ -38,6 +38,17 @@
                     "properties": {
                         "enabled": {
                             "type": "boolean"
+                        },
+                        "k8sApi": {
+                            "type": "object",
+                            "properties": {
+                                "cidrs": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
                         }
                     }
                 },

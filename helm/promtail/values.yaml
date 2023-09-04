@@ -10,6 +10,9 @@ promtail:
 
   networkPolicy:
     enabled: true
+    k8sApi:
+      cidrs:
+        - 172.31.0.0/16
 
   serviceMonitor:
     enabled: true
