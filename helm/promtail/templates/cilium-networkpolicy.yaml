@@ -16,9 +16,5 @@ spec:
   egress:
     - toEntities:
         - kube-apiserver
-      toPorts:
-        - ports:
-            - port: "443"
-        - ports:
-            - port: "6443"
+        - world
 {{- end }}
