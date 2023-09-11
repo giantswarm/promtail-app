@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Enabled networkpolicies.
+- Upgrade promtail chart: 6.14.1 => 6.15.1
+- Upgrade promtail: 2.8.3 => 2.8.4
 
 ## [1.3.0] - 2023-08-07
 
