@@ -14,6 +14,7 @@ promtail:
   networkPolicy:
     enabled: true
     k8sApi:
+      port: 443
       cidrs:
         - 0.0.0.0/0
 
