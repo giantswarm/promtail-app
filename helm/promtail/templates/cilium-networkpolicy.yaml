@@ -14,6 +14,11 @@ spec:
   endpointSelector:
     matchLabels:
       {{- include "promtail.selectorLabels" . | nindent 6 }}
+  ingress:
+    - toPorts:
+      - ports:
+        - port: "3101"
+          protocol: TCP
   egress:
     - toEntities:
         - kube-apiserver
