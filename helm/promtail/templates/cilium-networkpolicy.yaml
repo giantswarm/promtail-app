@@ -5,9 +5,6 @@ kind: CiliumNetworkPolicy
 metadata:
   name: {{ .Release.Name }}
   namespace: {{ .Release.Namespace | quote }}
-  annotations:
-    # create hook dependencies in the right order
-    "helm.sh/hook-weight": "-7"
   labels:
     {{- include "promtail.labels" . | nindent 4 }}
 spec:
