@@ -12,7 +12,7 @@ promtail:
     pspEnabled: true
 
   networkPolicy:
-    enabled: true
+    enabled: false
     k8sApi:
       port: 443
       cidrs:
