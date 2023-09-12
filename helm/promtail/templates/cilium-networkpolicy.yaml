@@ -18,5 +18,19 @@ spec:
     - toEntities:
         - kube-apiserver
         - world
+    - toEndpoints:
+      - matchLabels:
+          k8s-app: coredns
+      - matchLabels:
+          k8s-app: k8s-dns-node-cache
+      toPorts:
+      - ports:
+        - port: "53"
+          protocol: ANY
+        - port: "1053"
+          protocol: ANY
+        rules:
+          dns:
+          - matchPattern: '*'
 {{- end }}
 {{- end }}
