@@ -4,6 +4,7 @@ kyvernoPolicyExceptions:
   namespace: giantswarm
 
 ciliumNetworkPolicy:
+  # Must be disabled for imported EKS clusters without cilium as main CNI.
   enabled: true
 
 promtail:
