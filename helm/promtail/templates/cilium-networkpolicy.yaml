@@ -22,9 +22,11 @@ spec:
         - world
     - toEndpoints:
       - matchLabels:
-          k8s-app: coredns
+          "k8s:io.kubernetes.pod.namespace": kube-system
+          "k8s:k8s-app": coredns
       - matchLabels:
-          k8s-app: k8s-dns-node-cache
+          "k8s:io.kubernetes.pod.namespace": kube-system
+          "k8s:k8s-app": k8s-dns-node-cache
       toPorts:
       - ports:
         - port: "53"
@@ -34,14 +36,14 @@ spec:
         rules:
           dns:
           - matchPattern: '*'
-    - toEndpoints:
-      - matchLabels:
-          app.kubernetes.io/name: loki
-      toPorts:
-      - ports:
-        - port: "80"
-          protocol: ANY
-        - port: "9095"
-          protocol: ANY
+  - toEndpoints:
+    - matchLabels:
+        app.kubernetes.io/name: loki
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: ANY
+      - port: "9095"
+        protocol: ANY
 {{- end }}
 {{- end }}
