@@ -36,14 +36,14 @@ spec:
         rules:
           dns:
           - matchPattern: '*'
-  - toEndpoints:
-    - matchLabels:
-        app.kubernetes.io/name: loki
-    toPorts:
-    - ports:
-      - port: "8080"
-        protocol: ANY
-      - port: "9095"
-        protocol: ANY
+    - toEndpoints:
+      - matchLabels:
+          app.kubernetes.io/name: loki
+      toPorts:
+      - ports:
+        - port: "8080"
+          protocol: ANY
+        - port: "9095"
+          protocol: ANY
 {{- end }}
 {{- end }}
