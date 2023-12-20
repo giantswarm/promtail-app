@@ -30,7 +30,7 @@ promtail:
     # -- Docker image repository
     repository: giantswarm/promtail
     # -- Overrides the image tag whose default is the chart's appVersion
-    tag:
+    tag: null
     # -- Docker image pull policy
     pullPolicy: IfNotPresent
 
