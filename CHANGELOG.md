@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Configure `gsoci.azurecr.io` as the default container image registry.
+
 ## [1.4.1] - 2023-12-05
 
 ### Changed
@@ -141,18 +145,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Upgrade to promtail 2.2.1
-
-## [0.1.1-alpha3] - 2021-03-16
-
-### Removed
-
-- unsupported and removed in upstream `extra_client_config` and `extra_scrapre_configs` are removed as well
-
-## [0.1.1-alpha2] - 2021-03-15
-
-### Changed
-
-- Upgrade to promtail 2.2.0
 
 ## [0.1.1-alpha] - 2021-03-04
 
