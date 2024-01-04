@@ -26,7 +26,7 @@ promtail:
 
   image:
     # -- The Docker registry
-    registry: docker.io
+    registry: gsoci.azurecr.io
     # -- Docker image repository
     repository: giantswarm/promtail
     # -- Overrides the image tag whose default is the chart's appVersion
