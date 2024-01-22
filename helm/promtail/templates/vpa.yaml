@@ -1,0 +1,30 @@
+{{- if .Values.verticalPodAutoscaler.enabled }}
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "promtail.labels" . | nindent 4 }}
+spec:
+  targetRef:
+    apiVersion: "apps/v1"
+    kind: Deployment
+    name: {{ include "promtail.fullname" . }}
+  resourcePolicy:
+    containerPolicies:
+      - containerName: '*'
+        controlledResources:
+          - cpu
+          - memory
+        {{- if .Values.verticalPodAutoscaler.maxAllowed.set }}
+        maxAllowed:
+          cpu: {{ .Values.verticalPodAutoscaler.maxAllowed.cpu }}
+          memory: {{ .Values.verticalPodAutoscaler.maxAllowed.memory }}
+        {{- end }}
+        minAllowed:
+          cpu: {{ .Values.verticalPodAutoscaler.minAllowed.cpu }}
+          memory: {{ .Values.verticalPodAutoscaler.minAllowed.memory }}
+  updatePolicy:
+    updateMode: "Auto"
+{{- end }}

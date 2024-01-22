@@ -55,6 +55,9 @@
                                     "items": {
                                         "type": "string"
                                     }
+                                },
+                                "port": {
+                                    "type": "integer"
                                 }
                             }
                         }
@@ -105,6 +108,39 @@
                             "type": "string"
                         },
                         "scrapeTimeout": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "verticalPodAutoscaler": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
+                "maxAllowed": {
+                    "type": "object",
+                    "properties": {
+                        "cpu": {
+                            "type": "string"
+                        },
+                        "memory": {
+                            "type": "string"
+                        },
+                        "set": {
+                            "type": "boolean"
+                        }
+                    }
+                },
+                "minAllowed": {
+                    "type": "object",
+                    "properties": {
+                        "cpu": {
+                            "type": "string"
+                        },
+                        "memory": {
                             "type": "string"
                         }
                     }
