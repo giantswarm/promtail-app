@@ -8,6 +8,14 @@ ciliumNetworkPolicy:
   enabled: true
 
 promtail:
+  daemonset:
+    autoscaling:
+      enabled: true
+      # -- We set minAllowed=Requests to help VPA work efficiently
+      minAllowed:
+        cpu: 100m
+        memory: 128Mi
+
   rbac:
     # -- Specifies whether a PodSecurityPolicy is to be created
     pspEnabled: true
