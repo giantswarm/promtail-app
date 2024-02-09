@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Upgrade promtail chart: 6.15.3 => 6.15.5
+- Upgrade promtail: 2.9.2 => 2.9.3 - see [changelog](https://github.com/grafana/loki/blob/main/CHANGELOG.md) for more information.
+
 ## [1.5.0] - 2024-01-22
 
 ### Added
