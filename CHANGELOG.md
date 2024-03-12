@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.3] - 2024-03-12
+
 ### Changed
 
 - Set RAM limit to 2x requests, so it has a bit of extra space for pikes and prevent crashes.
@@ -194,7 +196,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### changes
 - first release
 
-[Unreleased]: https://github.com/giantswarm/promtail-app/compare/v1.5.2...HEAD
+[Unreleased]: https://github.com/giantswarm/promtail-app/compare/v1.5.3...HEAD
+[1.5.3]: https://github.com/giantswarm/promtail-app/compare/v1.5.2...v1.5.3
 [1.5.2]: https://github.com/giantswarm/promtail-app/compare/v1.5.1...v1.5.2
 [1.5.1]: https://github.com/giantswarm/promtail-app/compare/v1.5.0...v1.5.1
 [1.5.0]: https://github.com/giantswarm/promtail-app/compare/v1.4.2...v1.5.0
