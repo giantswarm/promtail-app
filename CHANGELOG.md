@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Set RAM limit to 2x requests, so it has a bit of extra space for pikes and prevent crashes.
+
 ## [1.5.1] - 2024-02-09
 
 ### Changed
