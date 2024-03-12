@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Adjust CPU settings: remove CPU adjustement by VPA and set CPU request/limit according to actual usage.
+
 ## [1.5.1] - 2024-02-09
 
 ### Changed
