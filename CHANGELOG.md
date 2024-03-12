@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Adjust CPU settings: remove CPU adjustement by VPA and set CPU request/limit according to actual usage.
+- Set RAM limit to 2x requests, so it has a bit of extra space for pikes and prevent crashes.
 
 ## [1.5.1] - 2024-02-09
 
