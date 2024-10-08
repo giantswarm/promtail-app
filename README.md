@@ -9,6 +9,11 @@ Please note that you can run multiple `promtail` instances on the same cluster (
 but it's up to you to provide a reasonable config for them (and ie. avoid
 duplication of scrapes).
 
+## ⚠️  Deprecation notice
+
+On most recent releases we use [Alloy](https://github.com/giantswarm/alloy-app/) to collect logs.
+Promtail is not used anymore, and it is now deprecated.
+
 **Table of Contents:**
 
 - [Install](#install)
